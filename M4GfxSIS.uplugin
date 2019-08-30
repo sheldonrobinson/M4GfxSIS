@@ -1,0 +1,29 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "M4GfxSIS",
+	"Description": "System Information Summary of the application host.",
+	"Category": "System",
+	"CreatedBy": "Sheldon Robinson",
+	"CreatedByURL": "https://sjrobinsonconsulting.com",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": true,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "M4GfxSIS",
+			"Type": "Runtime",
+			"LoadingPhase": "PreDefault",
+			"WhitelistPlatforms" :
+			[
+				"Win64",
+				"Linux",
+				"Mac"
+			]			
+		},
+	]
+}
