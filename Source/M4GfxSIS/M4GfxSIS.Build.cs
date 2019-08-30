@@ -10,7 +10,8 @@ public class M4GfxSIS : ModuleRules
 		
 		PublicIncludePaths.AddRange(
 			new string[] {
-				System.IO.Path.Combine(ModuleDirectory, "Public")
+				System.IO.Path.Combine(ModuleDirectory, "Public"),
+				System.IO.Path.Combine(ModuleDirectory, "..", "ThirdParty", "XInfoLibrary", "include")
 				// ... add public include paths required here ...
 			}
 			);
