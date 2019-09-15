@@ -43,7 +43,8 @@ public class M4GfxSIS : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
-				"Projects"
+				"Projects",
+				"JSON"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
@@ -56,6 +57,14 @@ public class M4GfxSIS : ModuleRules
 			}
 			);
 
-		//PublicIncludePaths.Add(System.IO.Path.Combine(ModuleDirectory, "..", "ThirdParty", "XInfoLibrary", "include"));
+		if(Target.Platform ==UnrealTargetPlatform.Win64){
+				PublicLibraryPaths.Add(System.IO.Path.Combine(ModuleDirectory, "..", "ThirdParty", "XInfoLibrary","Win64"));
+		}
+		if(Target.Platform ==UnrealTargetPlatform.Linux){
+				PublicLibraryPaths.Add(System.IO.Path.Combine(ModuleDirectory, "..", "ThirdParty", "XInfoLibrary","Linux"));
+		}
+		if(Target.Platform ==UnrealTargetPlatform.Mac){
+				PublicLibraryPaths.Add(System.IO.Path.Combine(ModuleDirectory, "..", "ThirdParty", "XInfoLibrary","Mac"));
+		}
 	}
 }

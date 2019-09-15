@@ -7,7 +7,7 @@
 namespace m4gfx
 {
 
-class summary_manager
+XINFOAPI class summary_manager
 {
     static summary_manager* ms_instance;
 

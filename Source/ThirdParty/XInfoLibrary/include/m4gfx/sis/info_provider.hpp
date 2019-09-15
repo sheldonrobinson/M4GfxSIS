@@ -2,12 +2,9 @@
 #define INFO_PROVIDER_HPP
 
 #include <m4gfx/sis/defs.hpp>
+#include <m4gfx/sis/types.h>
 #include <m4gfx/sis/x_info.hpp>
 
-#include <boost/lexical_cast.hpp>
-#include <boost/uuid/uuid_io.hpp>
-#include <boost/uuid/uuid_generators.hpp>
-#include <boost/algorithm/string/join.hpp>
 #include <set>
 #include <initializer_list>
 
@@ -15,28 +12,30 @@ namespace m4gfx
 {
 
  
-class info_provider
+XINFOAPI class info_provider
 {
 protected:
     bool dirty = true;
     x_info info;
     
 public:
-    info_provider() : _tag(boost::uuids::random_generator()()), dirty(true), info(m4gfx::XIC_NONE){}
+    info_provider();
     
-    info_provider(m4gfx::XINFOCLASS x_type) : _tag(boost::uuids::random_generator()()), dirty(true), info(x_type){}
+    info_provider(m4gfx::XINFOCLASS x_type);
     
-    info_provider(x_info& _info) : _tag(boost::uuids::random_generator()()),info(_info),dirty(true){}
-        
+    info_provider(x_info& _info);
+/*        
     info_provider(const info_provider& rhs)
         : _tag(rhs._tag), info(rhs.info), dirty(rhs.dirty){}
-        
+*/        
     virtual ~info_provider() {}
     
     virtual const x_info& construct()  = 0;
      
     virtual const info_provider& operator=(info_provider& obj) {
-        //_tag = obj._tag;
+        _tag = obj._tag;
+        info= obj.info;
+        return  *this;
     }
     
     const x_info& retrieve() {
@@ -59,10 +58,10 @@ public:
         return lhs._tag < rhs._tag;
     }
     
-    const boost::uuids::uuid& get_id() const { return _tag; }
+    const std::string& get_id() const { return _tag; }
 
 protected:
-    boost::uuids::uuid _tag;
+    std::string _tag;
 };
 
 struct provider_cmp {
@@ -71,8 +70,8 @@ struct provider_cmp {
     }
 };
 
-template< XINFOCLASS X = XIC_NONE > 
-class typed_info_provider : public info_provider {
+template<m4gfx::XINFOCLASS X = m4gfx::XIC_NONE > 
+XINFOAPI class typed_info_provider : public info_provider {
 
 private:
     //std::set<typed_info_provider, provider_cmp> _supplementals;
@@ -125,9 +124,10 @@ public:
     }
     
     XINFOCLASS get_type() { return _type; }
-        
-    void append( const x_info _info) {
-        std::string path_string = x_info_class_names[_info.get_type()] + "." + boost::uuids::to_string(_info.get_id());
+    
+    
+    void append( const m4gfx::x_info _info) {
+        std::string path_string = std::string(JSON_PATH_SEPARATOR)+m4gfx::x_info_class_names[_info.get_type()] + std::string(JSON_PATH_SEPARATOR) + _info.get_id();
         info.insert_info(path_string,_info);
     }
     

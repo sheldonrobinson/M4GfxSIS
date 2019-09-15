@@ -13,20 +13,20 @@ public class XInfoLibrary : ModuleRules
 
 		PublicIncludePaths.Add(Path.Combine(ModuleDirectory,  "include"));
 
-		string ThirdPartyBinariesDir = Path.Combine("$(EngineDir)","Binaries", "ThirdParty", "XInfoLibrary");
+		//string ThirdPartyBinariesDir = Path.Combine(ModuleDirectory,"Binaries", "ThirdParty", "XInfoLibrary");
 
 		if (Target.Platform == UnrealTargetPlatform.Win64)
 		{
 			// Add the import library
-			PublicLibraryPaths.Add(Path.Combine(ThirdPartyBinariesDir, "Win64"));
+			PublicLibraryPaths.Add(Path.Combine(ModuleDirectory, "Win64"));
 			PublicAdditionalLibraries.Add("xinfo.lib");
 			PublicAdditionalLibraries.Add("cpu_features.lib");
 			PublicAdditionalLibraries.Add("GLEW.lib");
 
 			// Dynamic
-            		RuntimeDependencies.Add(Path.Combine(ThirdPartyBinariesDir, "Win64", "xinfo.dll"));
-			RuntimeDependencies.Add(Path.Combine(ThirdPartyBinariesDir, "Win64", "cpu_features.dll"));
-			RuntimeDependencies.Add(Path.Combine(ThirdPartyBinariesDir, "Win64", "GLEW.dll"));
+            		RuntimeDependencies.Add(Path.Combine(ModuleDirectory, "Win64", "xinfo.dll"));
+			RuntimeDependencies.Add(Path.Combine(ModuleDirectory, "Win64", "cpu_features.dll"));
+			RuntimeDependencies.Add(Path.Combine(ModuleDirectory, "Win64", "GLEW.dll"));
 
 			// Delay-load the DLL, so we can load it from the right place first
 			PublicDelayLoadDLLs.Add("xinfo.dll");
@@ -36,26 +36,26 @@ public class XInfoLibrary : ModuleRules
         else if(Target.Platform == UnrealTargetPlatform.Linux)
         {
 			// Add the import library
-			PublicLibraryPaths.Add(Path.Combine(ThirdPartyBinariesDir, "Linux"));
+			PublicLibraryPaths.Add(Path.Combine(ModuleDirectory, "Linux"));
 			PublicAdditionalLibraries.Add("xinfo");
 			PublicAdditionalLibraries.Add("cpu_features");
 			PublicAdditionalLibraries.Add("GLEW");
 
 			// Dynamic
-            RuntimeDependencies.Add(Path.Combine(ThirdPartyBinariesDir, "Linux", "libxinfo.so"));
-			RuntimeDependencies.Add(Path.Combine(ThirdPartyBinariesDir, "Linux", "libcpu_features.so"));
-			RuntimeDependencies.Add(Path.Combine(ThirdPartyBinariesDir, "Linux", "libGLEW.so"));
+            RuntimeDependencies.Add(Path.Combine(ModuleDirectory, "Linux", "libxinfo.so"));
+			RuntimeDependencies.Add(Path.Combine(ModuleDirectory, "Linux", "libcpu_features.so"));
+			RuntimeDependencies.Add(Path.Combine(ModuleDirectory, "Linux", "libGLEW.so"));
 
         }
 		else if (Target.Platform == UnrealTargetPlatform.Mac)
 		{
 
 			// Dynamic
-            RuntimeDependencies.Add(Path.Combine(ThirdPartyBinariesDir, "Mac", "libxinfo.dylib"));
-			RuntimeDependencies.Add(Path.Combine(ThirdPartyBinariesDir, "Mac", "libcpu_features.dylib"));
-			RuntimeDependencies.Add(Path.Combine(ThirdPartyBinariesDir, "Mac", "libGLEW.dylib"));
+            RuntimeDependencies.Add(Path.Combine(ModuleDirectory, "Mac", "libxinfo.dylib"));
+			RuntimeDependencies.Add(Path.Combine(ModuleDirectory, "Mac", "libcpu_features.dylib"));
+			RuntimeDependencies.Add(Path.Combine(ModuleDirectory, "Mac", "libGLEW.dylib"));
 
-			PublicLibraryPaths.Add(Path.Combine(ThirdPartyBinariesDir, "Mac"));
+			PublicLibraryPaths.Add(Path.Combine(ModuleDirectory, "Mac"));
 		    PublicDelayLoadDLLs.Add(Path.Combine(ModuleDirectory, "Mac", "libxinfo.dylib"));
 			PublicDelayLoadDLLs.Add(Path.Combine(ModuleDirectory, "Mac", "libcpu_features.dylib"));
 			PublicDelayLoadDLLs.Add(Path.Combine(ModuleDirectory, "Mac", "libGLEW.dylib"));

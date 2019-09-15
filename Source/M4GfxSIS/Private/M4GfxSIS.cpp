@@ -1,14 +1,11 @@
 // Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 #include "M4GfxSIS.h"
-#include "M4GfxSISPrivatePCH.h"
 
 #define LOCTEXT_NAMESPACE "FM4GfxSISModule"
 
 void FM4GfxSISModule::StartupModule()
 {
-	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
-    TSharedRef<TJsonReader<TCHAR>> JsonReader = TJsonReaderFactory<TCHAR>::Create(m4gfx::summary_manager::Instance()->GetSystemInformationSummary().get_data_as_string() );
-	
+	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module	
 }
 
 void FM4GfxSISModule::ShutdownModule()

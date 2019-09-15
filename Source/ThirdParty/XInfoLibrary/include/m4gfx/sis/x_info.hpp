@@ -1,36 +1,28 @@
 #ifndef X_INFO_HPP
 #define X_INFO_HPP
 
-
 #include <m4gfx/sis/defs.hpp>
+#include <m4gfx/sis/types.h>
 
 #include <set>
 #include <string>
 
-#include <boost/lexical_cast.hpp>
-#include <boost/uuid/uuid_io.hpp>
-#include <boost/uuid/uuid_generators.hpp>
-#include <boost/property_tree/ptree.hpp>
-
 #include <rapidjson/document.h>
-#include <rapidjson/writer.h>
-#include <rapidjson/stringbuffer.h>
 
 namespace m4gfx
 {
 
-class x_info
+XINFOAPI class x_info
 {
 public:
-    x_info() : _tag(boost::uuids::random_generator()()),
-    _type(m4gfx::XIC_NONE){}
+    x_info();
     
-    x_info(m4gfx::XINFOCLASS x_type) : _tag(boost::uuids::random_generator()()),
-    _type(x_type){}
+    x_info(m4gfx::XINFOCLASS x_type);
     
-    explicit x_info(m4gfx::XINFOCLASS type, boost::property_tree::ptree info, 
-    std::set<std::string> attrs = std::set<std::string> () ) : _tag(boost::uuids::random_generator()()),
-    _type(type), xis_info(info), _attrs(attrs){}
+    explicit x_info(m4gfx::XINFOCLASS type, rapidjson::Document& info, 
+    std::set<std::string> attrs = std::set<std::string> () );
+    
+    x_info(const x_info& rhs);
     
    ~x_info(){}
 
@@ -42,14 +34,16 @@ public:
         return lhs._tag < rhs._tag;
     }
 
+
     const x_info& operator=(x_info const& rhs) {
         _tag = rhs._tag;
         _type = rhs._type;
-        xis_info = rhs.xis_info;        
+        xis_info.CopyFrom(rhs.xis_info, xis_info.GetAllocator());        
         _attrs = rhs._attrs;
+        return *this;
     }
-    
-    const boost::uuids::uuid& get_id() const { return _tag; }
+
+    const std::string& get_id() const { return _tag; }
     
     const m4gfx::XINFOCLASS get_type() const { return _type; }
     
@@ -63,14 +57,16 @@ public:
     
     const void insert_info(std::string info_path, const x_info&  data);
     
-    const boost::property_tree::ptree& get_data() const {
+    rapidjson::Document& get_data() {
         return xis_info;
     }
-
+    
+    std::string get_data_as_string() const; 
+    
 private:
     m4gfx::XINFOCLASS _type;
-    boost::uuids::uuid _tag;
-    boost::property_tree::ptree xis_info;
+    std::string _tag;
+    rapidjson::Document xis_info;
     std::set<std::string> _attrs;
 };
 

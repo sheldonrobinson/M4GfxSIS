@@ -1,8 +1,8 @@
 // Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
-
 #include "M4GfxSISBPLibrary.h"
 #include "M4GfxSIS.h"
-#include "Json.h"
+#include "M4GfxSISPrivatePCH.h"
+
 
 UM4GfxSISBPLibrary::UM4GfxSISBPLibrary(const FObjectInitializer& ObjectInitializer)
 : Super(ObjectInitializer)
@@ -10,9 +10,20 @@ UM4GfxSISBPLibrary::UM4GfxSISBPLibrary(const FObjectInitializer& ObjectInitializ
 
 }
 
-float UM4GfxSISBPLibrary::M4GfxSISSampleFunction(float Param)
+void UM4GfxSISBPLibrary::M4GfxSISFunction()
 {
-	return -1;
+/*
+	TSharedRef<TJsonReader<TCHAR>> JsonReader = TJsonReaderFactory<TCHAR>
+                    ::Create(
+                                m4gfx::summary_manager::Instance()->GetSystemInformationSummary()
+                                                                    .get_data_as_string().c_str()
+                            );
+    TSharedPtr<FJsonObject> JsonObject;
+    if (FJsonSerializer::Deserialize(JsonReader, JsonObject) &&
+				JsonObject.IsValid())
+			{
+            }
+*/
 }
 
 /*

@@ -27,6 +27,6 @@ class UM4GfxSISBPLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_UCLASS_BODY()
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Execute Sample function", Keywords = "M4GfxSIS sample test testing"), Category = "M4GfxSISTesting")
-	static float M4GfxSISSampleFunction(float Param);
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Get System Information", Keywords = "M4GfxSIS SystemInfo System Information CPU GPU", Category = "System"))
+	static void M4GfxSISFunction();
 };

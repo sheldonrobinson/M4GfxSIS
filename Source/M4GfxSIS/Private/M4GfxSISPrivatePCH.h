@@ -1,1 +1,1 @@
-#include "m4gfx/sis/info_provider.h"
+#include "m4gfx/sis/summary_manager.hpp"
