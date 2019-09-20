@@ -15,15 +15,20 @@
 	"Installed": false,
 	"Modules": [
 		{
+			"Name": "XInfoPlugin",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		},
+		{
 			"Name": "M4GfxSIS",
 			"Type": "Runtime",
-			"LoadingPhase": "PreDefault",
+			"LoadingPhase": "PreLoadingScreen",
 			"WhitelistPlatforms" :
 			[
 				"Win64",
 				"Linux",
 				"Mac"
 			]			
-		},
+		}
 	]
 }

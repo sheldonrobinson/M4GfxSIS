@@ -3,7 +3,10 @@
 #pragma once
 
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "Json.h"
 #include "M4GfxSISBPLibrary.generated.h"
+
+
 
 /* 
 *	Function library class.
@@ -22,11 +25,63 @@
 *	For more info on custom blueprint nodes visit documentation:
 *	https://wiki.unrealengine.com/Custom_Blueprint_Node_Creation
 */
-UCLASS()
+USTRUCT(BlueprintType, Category = "M4GfxSIS|Information")
+struct FSystemInfo {
+public:
+	GENERATED_USTRUCT_BODY()
+
+	TSharedPtr<FJsonObject> json;
+};
+
+USTRUCT(BlueprintType, Category = "M4GfxSIS|Information")
+struct FSystemInfoMap {
+public:
+	GENERATED_USTRUCT_BODY()
+
+	TMap<FString, TSharedPtr<FJsonValue> > map;
+};
+
+USTRUCT(BlueprintType, Category = "M4GfxSIS|Information")
+struct FSystemInfoFields {
+public:
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, DisplayName = "List of System Properties", Category = "M4GfxSIS|Information")
+	TSet<FString> fields;
+
+};
+
+USTRUCT(BlueprintType, Category = "M4GfxSIS|Information")
+struct FSystemInfoValue {
+public:
+	GENERATED_USTRUCT_BODY()
+
+	TSharedPtr<FJsonValue> value;
+
+};
+
+UCLASS(BlueprintType, Category = "M4GfxSIS|Information")
 class UM4GfxSISBPLibrary : public UBlueprintFunctionLibrary
 {
+
 	GENERATED_UCLASS_BODY()
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Get System Information", Keywords = "M4GfxSIS SystemInfo System Information CPU GPU", Category = "System"))
-	static void M4GfxSISFunction();
+	typedef TSharedRef< TJsonWriter< TCHAR, TPrettyJsonPrintPolicy< TCHAR > > > FPrettyJsonWriter;
+	typedef TJsonWriterFactory< TCHAR, TPrettyJsonPrintPolicy< TCHAR > > FPrettyJsonStringWriterFactory;
+
+
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get System Information", Keywords = "M4GfxSIS System Information"), Category = "M4GfxSIS|Information")
+	static const FSystemInfo SysInfo();
+
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get System Information Field Names", Keywords = "M4GfxSIS System Information"), Category = "M4GfxSIS|Information")
+	static const FSystemInfoFields SysInfoFieldNames();
+
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get System Information Value", Keywords = "M4GfxSIS System Information"), Category = "M4GfxSIS|Information")
+	static const FSystemInfoValue SysInfoLookup(UPARAM(ref)  FSystemInfo& SysInfo, UPARAM(ref) const FString& FieldName);
+
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Display System Information Field Value", Keywords = "M4GfxSIS System Information"), Category = "M4GfxSIS|Information")
+	static const FString DisplaySysInfoValue(UPARAM(ref)  FSystemInfoValue& Value);
+
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Display System Information Propertues", Keywords = "M4GfxSIS System Information"), Category = "M4GfxSIS|Information")
+	static const FSystemInfoMap GetSysInfoPropertyMap(UPARAM(ref)  FSystemInfo& SysInfo);
 };

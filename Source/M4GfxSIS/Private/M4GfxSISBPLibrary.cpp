@@ -1,94 +1,91 @@
-// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
-#include "M4GfxSISBPLibrary.h"
+// Copyright 019 Sheldon Robinson, Inc. All Rights Reserved.
+
 #include "M4GfxSIS.h"
-#include "M4GfxSISPrivatePCH.h"
+#include "m4gfx/sis/summary_manager.hpp"
+#include "M4GfxSISBPLibrary.h"
 
 
 UM4GfxSISBPLibrary::UM4GfxSISBPLibrary(const FObjectInitializer& ObjectInitializer)
-: Super(ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 
 }
 
-void UM4GfxSISBPLibrary::M4GfxSISFunction()
-{
-/*
-	TSharedRef<TJsonReader<TCHAR>> JsonReader = TJsonReaderFactory<TCHAR>
-                    ::Create(
-                                m4gfx::summary_manager::Instance()->GetSystemInformationSummary()
-                                                                    .get_data_as_string().c_str()
-                            );
-    TSharedPtr<FJsonObject> JsonObject;
-    if (FJsonSerializer::Deserialize(JsonReader, JsonObject) &&
-				JsonObject.IsValid())
-			{
-            }
-*/
+const FSystemInfo UM4GfxSISBPLibrary::SysInfo() {
+	FString JsonString(m4gfx::summary_manager::Instance()->GetSystemInformationSummary().get_data_as_string().c_str());
+	TSharedRef< TJsonReader<TCHAR> > Reader = TJsonReaderFactory<TCHAR>::Create(JsonString);
+	FSystemInfo  SysInfo;
+	SysInfo.json = MakeShareable(new FJsonObject());
+	if (FJsonSerializer::Deserialize<TCHAR>(Reader, SysInfo.json) && SysInfo.json.IsValid()) {
+		UE_LOG(LogTemp, Log, TEXT("Created SysInfo Json"));
+	}
+	return SysInfo;
 }
 
-/*
-struct JsonCracker {
-	enum JsonDataType {
-		JSON_BOOLEAN =0,
-		JSON_NUMBER,
-		JSON_NULL,
-		JSON_STRING,
-		JSON_Array,
-		JSON_OBJECT
-	};
+const FSystemInfoFields UM4GfxSISBPLibrary::SysInfoFieldNames() {
+	FSystemInfoFields SysFields;
+	for (auto sFieldname : m4gfx::summary_manager::Instance()->GetSystemInformationSummary().get_fields()) {
+		FString Field(sFieldname.c_str());
+		SysFields.fields.Add(Field);
+	}
+	return SysFields;
+}
 
-	JsonDataType type;
+const FSystemInfoValue UM4GfxSISBPLibrary::SysInfoLookup(UPARAM(ref)  FSystemInfo& SysInfo, UPARAM(ref) const FString& FieldName) {
+	FSystemInfoValue SysValue;
+	if (SysInfo.json.IsValid()) {
+		SysValue.value = SysInfo.json.Get()->TryGetField(FieldName);
+	}
+	return SysValue;
+}
 
-	union JsonData {
-		FJsonValueNull nullValue,
-		FJsonValueBoolean booleanValue,
-		FJsonValueNumber numberValue,
-		FJsonValueString stringValue,
-		FJsonValueArry arrayValue,
-		FJsonValueObject objectValue
-	};
 
-	JsonCracker(JsonDataType t): type(t){
-		switch(type){
-			case JsonDataType::JSON_BOOLEAN:
-				new (&booleanValue) bool();
+const FString UM4GfxSISBPLibrary::DisplaySysInfoValue(UPARAM(ref)  FSystemInfoValue& Value) {
+	if (Value.value.IsValid()) {
+		switch (Value.value.Get()->Type) {
+			case EJson::None:
+			case EJson::Null:
+				UE_LOG(LogTemp, Log, TEXT("Display Empty System Value"));
 				break;
-			case JsonDataType::JSON_NUMBER:
-				new (&longValue) int64();
+			case EJson::String: {
+					FString OutputString;
+					if (Value.value.Get()->TryGetString(OutputString)) {
+						UE_LOG(LogTemp, Log, TEXT("Display String System Value"));
+					}
+					return OutputString;
+				}
 				break;
-			case JsonDataType::JSON_NULL:
-				IsNull=true;
+			case EJson::Number:
+				return FString::SanitizeFloat(Value.value.Get()->AsNumber());
 				break;
-			case JsonDataType::JSON_STRING:
-				new (&stringValue) FString();
+			case EJson::Array: {
+					FString OutputString;
+					FPrettyJsonWriter JsonWriter = FPrettyJsonStringWriterFactory::Create(&OutputString);
+					if (FJsonSerializer::Serialize(Value.value.Get()->AsArray(), JsonWriter, true)) {
+						UE_LOG(LogTemp, Log, TEXT("Display Array System Value"));
+					}
+					return OutputString;
+				}
 				break;
-			case JsonDataType::JSON_Array:
-				new (&arrayValue) TArray<FString>();
-				break;
-			default:
-				new (&objectValue) TSharedPtr<FJsonObject>();
+			case EJson::Object: {
+					FString OutputString;
+					FPrettyJsonWriter JsonWriter = FPrettyJsonStringWriterFactory::Create(&OutputString);
+					if (FJsonSerializer::Serialize(Value.value.Get()->AsObject().ToSharedRef(), JsonWriter, true)) {
+						UE_LOG(LogTemp, Log, TEXT("Display Oject System Value"));
+					}
+					return OutputString;
+				}
 				break;
 		}
 	}
+	return FString();
+}
 
-	~JsonCracker(){
-		switch(type){
-			case JsonDataType::JSON_BOOLEAN:
-				booleanValue.~bool();
-				break;
-			case JsonDataType::JSON_NUMBER:
-				longValue.~int64();
-				break;
-			case JsonDataType::JSON_STRING:
-				stringValue.~FString();
-				break;
-			case JsonDataType::JSON_Array:
-				arrayValue.~TArray<FString>();
-				break;
-			case JsonDataType::JSON_OBJECT
-				objectValue.~TSharedPtr<FJsonObject>();
-				break;
-		}
+
+const FSystemInfoMap UM4GfxSISBPLibrary::GetSysInfoPropertyMap(UPARAM(ref)  FSystemInfo& SysInfo) {
+	FSystemInfoMap pmap;
+	if (SysInfo.json.IsValid()){
+		 pmap.map.Append( SysInfo.json.Get()->Values);
 	}
-};*/
-
+	return pmap;
+}

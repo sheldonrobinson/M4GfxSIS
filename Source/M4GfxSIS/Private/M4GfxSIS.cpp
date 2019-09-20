@@ -1,11 +1,13 @@
-// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
+// Copyright 2019 Sheldon Robinson, Inc. All Rights Reserved.
+
 #include "M4GfxSIS.h"
 
 #define LOCTEXT_NAMESPACE "FM4GfxSISModule"
 
 void FM4GfxSISModule::StartupModule()
 {
-	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module	
+	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
+	
 }
 
 void FM4GfxSISModule::ShutdownModule()
