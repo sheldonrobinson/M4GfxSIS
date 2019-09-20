@@ -82,6 +82,6 @@ class UM4GfxSISBPLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "Display System Information Field Value", Keywords = "M4GfxSIS System Information"), Category = "M4GfxSIS|Information")
 	static const FString DisplaySysInfoValue(UPARAM(ref)  FSystemInfoValue& Value);
 
-	UFUNCTION(BlueprintPure, meta = (DisplayName = "Display System Information Propertues", Keywords = "M4GfxSIS System Information"), Category = "M4GfxSIS|Information")
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Display System Information Properties", Keywords = "M4GfxSIS System Information"), Category = "M4GfxSIS|Information")
 	static const FSystemInfoMap GetSysInfoPropertyMap(UPARAM(ref)  FSystemInfo& SysInfo);
 };

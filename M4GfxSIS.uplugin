@@ -22,7 +22,7 @@
 		{
 			"Name": "M4GfxSIS",
 			"Type": "Runtime",
-			"LoadingPhase": "PreLoadingScreen",
+			"LoadingPhase": "Default",
 			"WhitelistPlatforms" :
 			[
 				"Win64",
