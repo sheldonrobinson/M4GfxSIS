@@ -10,10 +10,10 @@
 #  ifndef XINFO_TEMPLATE_API
 #    ifdef XINFO_EXPORTS
         /* We are building this library */
-#      define XINFO_TEMPLATE_API
+#      define XINFO_TEMPLATE_API __attribute__((visibility("default")))
 #    else
         /* We are using this library */
-#      define XINFO_TEMPLATE_API
+#      define XINFO_TEMPLATE_API __attribute__((visibility("default")))
 #    endif
 #  endif
 

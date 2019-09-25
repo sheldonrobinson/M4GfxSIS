@@ -11,7 +11,6 @@
 namespace m4gfx
 {
 
- 
 class info_provider
 {
 protected:
@@ -35,12 +34,13 @@ public:
     virtual const info_provider& operator=(info_provider& obj) {
         _tag = obj._tag;
         info= obj.info;
+	dirty = obj.dirty;
         return  *this;
     }
     
-    const x_info& retrieve() {
+    x_info& retrieve() {
         if(dirty){
-            info = construct();
+            construct();
             dirty = false;
         }
         return info;
@@ -74,7 +74,6 @@ template<m4gfx::XINFOCLASS X = m4gfx::XIC_NONE >
 class typed_info_provider : public info_provider {
 
 private:
-    //std::set<typed_info_provider, provider_cmp> _supplementals;
     std::set<m4gfx::x_info, m4gfx::xinfo_cmp> appendices;
     XINFOCLASS _type = X;
     
@@ -84,26 +83,26 @@ public:
     typedef typename std::set<m4gfx::x_info, m4gfx::xinfo_cmp>::iterator appendices_iterator;
     
     typed_info_provider() 
-        : info_provider(_type) {}
+        : info_provider(m4gfx::XIC_NONE) {}
      
     ~typed_info_provider() override {
         /*_supplementals.clear();*/
     } 
-
+    /*
     const typed_info_provider& operator=(typed_info_provider& obj){
         info_provider::operator=(obj);
-        _type = obj._type;
-        info = obj.info;
+        //_type = obj._type;
+        //info = obj.info;
         dirty = obj.dirty;
-		return *this;
-    }   
+	return *this;
+    } */  
     
     virtual void build();
     
-	const x_info& construct() override {
+    const x_info& construct() override {
         if(dirty){
              build();
-        }         
+        }     
         for(auto _appendix: appendices){
             append(_appendix);
         }
@@ -124,15 +123,15 @@ public:
         return info_provider::operator()(lhs,rhs);
     }
     
-	XINFOCLASS get_type() { return _type; }
+    XINFOCLASS get_type() { return _type; }
     
     
-	void append( const m4gfx::x_info _info) {
+    void append( const m4gfx::x_info _info) {
         std::string path_string = std::string(JSON_PATH_SEPARATOR)+m4gfx::x_info_class_names[_info.get_type()] + std::string(JSON_PATH_SEPARATOR) + _info.get_id();
         info.insert_info(path_string,_info);
     }
     
-	void add(const x_info info)  {
+    void add(const x_info info)  {
         appendices.insert(info);
     }
 

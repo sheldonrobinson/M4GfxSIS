@@ -9,20 +9,20 @@
 #  ifndef XINFO_API
 #    ifdef xinfo_EXPORTS
         /* We are building this library */
-#      define XINFO_API __declspec(dllexport)
+#      define XINFO_API __attribute__((visibility("default")))
 #    else
         /* We are using this library */
-#      define XINFO_API __declspec(dllimport)
+#      define XINFO_API __attribute__((visibility("default")))
 #    endif
 #  endif
 
 #  ifndef XINFO_NO_EXPORT
-#    define XINFO_NO_EXPORT 
+#    define XINFO_NO_EXPORT __attribute__((visibility("hidden")))
 #  endif
 #endif
 
 #ifndef XINFO_DEPRECATED
-#  define XINFO_DEPRECATED __declspec(deprecated)
+#  define XINFO_DEPRECATED __attribute__ ((__deprecated__))
 #endif
 
 #ifndef XINFO_DEPRECATED_EXPORT
@@ -39,4 +39,4 @@
 #  endif
 #endif
 
-#endif /* XINFO_API_H */
+#endif

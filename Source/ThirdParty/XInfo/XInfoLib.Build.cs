@@ -27,7 +27,7 @@ public class XInfoLib : ModuleRules
 			PublicAdditionalLibraries.Add("xinfo.lib");
 			string DLLName = "xinfo.dll";
 			// Dynamic
-            RuntimeDependencies.Add(Path.Combine(LibPath, DLLName));
+            		RuntimeDependencies.Add(Path.Combine(LibPath, DLLName));
 
 			// Delay-load the DLL, so we can load it from the right place first
 			PublicDelayLoadDLLs.Add(DLLName);
@@ -39,7 +39,7 @@ public class XInfoLib : ModuleRules
 			PublicAdditionalLibraries.Add("xinfo");
 
 			// Dynamic
-            RuntimeDependencies.Add(Path.Combine(LibPath, "libxinfo.so"));
+            		RuntimeDependencies.Add(Path.Combine(LibPath, "libxinfo.so"));
 			
 			RuntimeDependencies.Add(Path.Combine(BinaryPath, "libxinfo.so"));
 
@@ -49,7 +49,7 @@ public class XInfoLib : ModuleRules
 			string DLLName = "libxinfo.dylib";
 
 			// Dynamic
-            RuntimeDependencies.Add(Path.Combine(LibPath, DLLName));
+            		RuntimeDependencies.Add(Path.Combine(LibPath, DLLName));
 			
 			RuntimeDependencies.Add(Path.Combine(BinaryPath, DLLName));
 		    PublicDelayLoadDLLs.Add(Path.Combine(LibPath, DLLName));
