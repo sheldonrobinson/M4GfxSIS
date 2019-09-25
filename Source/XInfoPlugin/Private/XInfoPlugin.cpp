@@ -1,4 +1,4 @@
-// Copyright 2019 heldon Robinson, Inc. All Rights Reserved.
+// Copyright 2019 Sheldon Robinson. All Rights Reserved.
 
 #include "XInfoPlugin.h"
 #include "Core.h"

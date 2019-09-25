@@ -1,4 +1,4 @@
-// Copyright 2019 Sheldon Robinsn, Inc. All Rights Reserved.
+// Copyright 2019 Sheldon Robinson. All Rights Reserved.
 
 #pragma once
 

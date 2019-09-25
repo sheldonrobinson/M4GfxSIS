@@ -1,4 +1,4 @@
-// Some copyright should be here...
+// Copyright 2019 Sheldon Robinson. All Rights Reserved.
 
 using UnrealBuildTool;
 
@@ -26,7 +26,7 @@ public class M4GfxSIS : ModuleRules
 			new string[]
 			{
 				"Core",
-                "XInfoLib",
+                		"XInfoLib",
 
 				// ... add other public dependencies that you statically link with here ...
 			}
@@ -40,8 +40,8 @@ public class M4GfxSIS : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
-                "Json",
-                "JsonUtilities",
+				"Json",
+				"JsonUtilities",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

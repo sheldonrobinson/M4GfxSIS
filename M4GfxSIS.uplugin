@@ -2,13 +2,14 @@
 	"FileVersion": 3,
 	"Version": 1,
 	"VersionName": "1.0",
+	"EngineVersion": "4.23",
 	"FriendlyName": "M4GfxSIS",
 	"Description": "System Information Summary of the application host.",
 	"Category": "System",
 	"CreatedBy": "Sheldon Robinson",
 	"CreatedByURL": "https://sjrobinsonconsulting.com",
 	"DocsURL": "",
-	"MarketplaceURL": "",
+	"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/0d32dc8c030f4711ba8009b8ad757d43",
 	"SupportURL": "",
 	"CanContainContent": true,
 	"IsBetaVersion": true,
@@ -17,7 +18,13 @@
 		{
 			"Name": "XInfoPlugin",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"WhitelistPlatforms" :
+			[
+				"Win64",
+				"Linux",
+				"Mac"
+			]
 		},
 		{
 			"Name": "M4GfxSIS",
