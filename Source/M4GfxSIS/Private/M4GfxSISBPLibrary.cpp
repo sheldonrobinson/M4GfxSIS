@@ -1,8 +1,9 @@
 // Copyright 019 Sheldon Robinson, Inc. All Rights Reserved.
 
+#include "M4GfxSISBPLibrary.h"
 #include "M4GfxSIS.h"
 #include "m4gfx/sis/summary_manager.hpp"
-#include "M4GfxSISBPLibrary.h"
+
 
 
 UM4GfxSISBPLibrary::UM4GfxSISBPLibrary(const FObjectInitializer& ObjectInitializer)

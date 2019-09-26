@@ -17,11 +17,11 @@ void FXInfoPluginModule::StartupModule()
 	// Add on the relative location of the third party dll and load it
 	FString LibraryPath;
 #if PLATFORM_WINDOWS
-	LibraryPath = FPaths::Combine(*BaseDir, TEXT("Source/ThirdParty/XInfo/Win64/xinfo.dll"));
+	LibraryPath = FPaths::Combine(*BaseDir, TEXT("Source/ThirdParty/XInfoLibrary/Win64/xinfo.dll"));
 #elif PLATFORM_LINUX
-	LibraryPath = FPaths::Combine(*BaseDir, TEXT("Source/ThirdParty/XInfo/Linux/libxinfo.so"));
+	LibraryPath = FPaths::Combine(*BaseDir, TEXT("Source/ThirdParty/XInfoLibrary/Linux/libxinfo.so"));
 #elif PLATFORM_MAC
-    LibraryPath = FPaths::Combine(*BaseDir, TEXT("Source/ThirdParty/XInfo/Mac/Release/libxinfo.dylib"));
+    LibraryPath = FPaths::Combine(*BaseDir, TEXT("Source/ThirdParty/XInfoLibrary/Mac/Release/libxinfo.dylib"));
 #endif // PLATFORM_WINDOWS
 
 	XInfoLibraryHandle = !LibraryPath.IsEmpty() ? FPlatformProcess::GetDllHandle(*LibraryPath) : nullptr;
