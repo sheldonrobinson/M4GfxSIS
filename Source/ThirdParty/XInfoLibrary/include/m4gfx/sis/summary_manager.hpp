@@ -26,7 +26,7 @@ public:
 
     static void Release();
 
-    XINFO_API const x_info& GetSystemInformationSummary(){
+    const x_info& GetSystemInformationSummary(){
         if(RunOnce){
             setup();
             RunOnce = false;

@@ -49,33 +49,33 @@ public:
         return *this;
     }
 
-    XINFO_API  const std::string& get_id() const { return _tag; }
+    const std::string& get_id() const { return _tag; }
     
-    XINFO_API  const m4gfx::XINFOCLASS get_type() const { return _type; }
+    const m4gfx::XINFOCLASS get_type() const { return _type; }
    
-    XINFO_API  void set_type(m4gfx::XINFOCLASS t ) { _type = t; }
+    void set_type(m4gfx::XINFOCLASS t ) { _type = t; }
     
-    XINFO_API  const void add_attribute(std::string attr){
+    const void add_attribute(std::string attr){
         _attrs.insert(attr);
     }
 
-    XINFO_API  const void add_attribute(const std::set<std::string>& attrs) {
+    const void add_attribute(const std::set<std::string>& attrs) {
 	_attrs.insert(attrs.cbegin(), attrs.cend());
     }
     
-    XINFO_API   const void insert_json(const rapidjson::Document& d);
+    const void insert_json(const rapidjson::Document& d);
     
-    XINFO_API  const void insert_info(const std::string info_path, const x_info&  data);
+    const void insert_info(const std::string info_path, const x_info&  data);
 
-    XINFO_API  const rapidjson::Document& get_data() const {
+    const rapidjson::Document& get_data() const {
         return xis_info;
     }
 
-    XINFO_API  const std::set<std::string> get_fields() const  {
+    const std::set<std::string> get_fields() const  {
 	return _attrs;
     }
     
-    XINFO_API  const std::string get_data_as_string() const {
+    const std::string get_data_as_string() const {
     	rapidjson::StringBuffer buffer;
     	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
     	xis_info.Accept(writer);
