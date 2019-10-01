@@ -18,41 +18,43 @@ public class XInfoLib : ModuleRules
 		PublicLibraryPaths.Add(LibPath);
 		PublicIncludePaths.Add(Path.Combine(ModuleDirectory,  "include"));
 
-        PublicDefinitions.AddRange(new string[] { "FMT_HEADER_ONLY=1", "RAPIDJSON_HAS_STDSTRING=1", "GLEW_STATIC=1" });
+		PublicDefinitions.AddRange(new string[] { "FMT_HEADER_ONLY=1", "RAPIDJSON_HAS_STDSTRING=1", "GLEW_STATIC=1" });
 
 
-        if (Target.Platform == UnrealTargetPlatform.Win64)
+		if (Target.Platform == UnrealTargetPlatform.Win64)
+			{
+				// Add the import library
+				PublicAdditionalLibraries.Add("xinfo.lib");
+				string DLLName = "xinfo.dll";
+				// Dynamic
+		    		RuntimeDependencies.Add(Path.Combine(LibPath, DLLName));
+
+				// Delay-load the DLL, so we can load it from the right place first
+				PublicDelayLoadDLLs.Add(DLLName);
+				RuntimeDependencies.Add(Path.Combine(BinaryPath, DLLName));
+			}
+		else if(Target.Platform == UnrealTargetPlatform.Linux)
 		{
-			// Add the import library
-			PublicAdditionalLibraries.Add("xinfo.lib");
-			string DLLName = "xinfo.dll";
-			// Dynamic
-            		RuntimeDependencies.Add(Path.Combine(LibPath, DLLName));
+				// Add the import library
+				PublicAdditionalLibraries.Add("xinfo");
 
-			// Delay-load the DLL, so we can load it from the right place first
-			PublicDelayLoadDLLs.Add(DLLName);
-			RuntimeDependencies.Add(Path.Combine(BinaryPath, DLLName));
+				// Dynamic
+		    		RuntimeDependencies.Add(Path.Combine(LibPath, "libxinfo.so"));
+				
+				RuntimeDependencies.Add(Path.Combine(BinaryPath, "libxinfo.so"));
+
 		}
-        else if(Target.Platform == UnrealTargetPlatform.Linux)
-        {
-			// Add the import library
-			PublicAdditionalLibraries.Add("xinfo");
-
-			// Dynamic
-            		RuntimeDependencies.Add(Path.Combine(LibPath, "libxinfo.so"));
-			
-			RuntimeDependencies.Add(Path.Combine(BinaryPath, "libxinfo.so"));
-
-        }
+/*
 		else if (Target.Platform == UnrealTargetPlatform.Mac)
 		{
 			string DLLName = "libxinfo.dylib";
 
 			// Dynamic
-            		RuntimeDependencies.Add(Path.Combine(LibPath, DLLName));
+	    		RuntimeDependencies.Add(Path.Combine(LibPath, DLLName));
 			
 			RuntimeDependencies.Add(Path.Combine(BinaryPath, DLLName));
 		    PublicDelayLoadDLLs.Add(Path.Combine(LibPath, DLLName));
 		}
+*/
 	}
 }
