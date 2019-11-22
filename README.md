@@ -1,7 +1,7 @@
 # M4GfxSIS
 ## System Information Summary Blueprint Library for UE4
 
-M4GfxSIS is provide the following system information summmary at runtime
+M4GfxSIS will provide the following system information summmary at runtime
 1. Operation System - name, kernel, version & build
 2. CPU - brand, architecture, uarch, bits
 3. Processors - cores, threads, frequency, cache topology (L1, L2, L3)
